@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>JS Drum Kit</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
 
+<body>
 
   <div class="keys">
     <div data-key="65" class="key">
@@ -57,10 +58,37 @@
   <audio data-key="75" src="sounds/tom.wav"></audio>
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
-<script>
+  <script>
+    // My quick solution - there is a bit of a delay in the playing of the audio
+    const playSound = (e) => {
+      const dataKey = `data-key="${e.keyCode}"`;
+      const keyPushed = document.querySelector(`.key[${dataKey}]`);
+      const keyAudio = document.querySelector(`audio[${dataKey}]`);
+      if (keyPushed) {
+        keyPushed.classList.add('playing');
+        keyAudio.currentTime = 0;  // This is what I was missing
+        keyAudio.play();
+        // setTimeout(()=>{
+        //   keyPushed.classList.remove('playing');
+        // }, 70);
+        // This can be a quick dirty fix but in case the transition time changes you want it to change with it
 
-</script>
+      }
+    };
 
+    const keys = document.querySelectorAll('.key');
+    keys.forEach(key => {
+      key.addEventListener('transitionend', (e) => {
+        e.target.classList.remove('playing');
+        // I need e.target instead of this due to arrow functions and how the this keyword works and I'm too stubborn to stop using arrow functions
+      });
+    });
+
+    // Wes used a separate function to determine if the transition property name was transform and all of that but that seemed like more work.
+
+    window.addEventListener('keydown', playSound);
+  </script>
 
 </body>
+
 </html>
