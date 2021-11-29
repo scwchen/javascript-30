@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>JS + CSS Clock</title>
 </head>
+
 <body>
 
-
-    <div class="clock">
-      <div class="clock-face">
-        <div class="hand hour-hand"></div>
-        <div class="hand min-hand"></div>
-        <div class="hand second-hand"></div>
-      </div>
+  <div class="clock">
+    <div class="clock-face">
+      <div class="hand hour-hand"></div>
+      <div class="hand min-hand"></div>
+      <div class="hand second-hand"></div>
     </div>
-
+  </div>
 
   <style>
     html {
@@ -43,17 +43,18 @@
       position: relative;
       padding: 2rem;
       box-shadow:
-        0 0 0 4px rgba(0,0,0,0.1),
+        0 0 0 4px rgba(0, 0, 0, 0.1),
         inset 0 0 0 3px #EFEFEF,
         inset 0 0 10px black,
-        0 0 10px rgba(0,0,0,0.2);
+        0 0 10px rgba(0, 0, 0, 0.2);
     }
 
     .clock-face {
       position: relative;
       width: 100%;
       height: 100%;
-      transform: translateY(-3px); /* account for the height of the clock hands */
+      transform: translateY(-3px);
+      /* account for the height of the clock hands */
     }
 
     .hand {
@@ -62,13 +63,38 @@
       background: black;
       position: absolute;
       top: 50%;
+      transform-origin: right;
+      transform: rotate(90deg);
+      /* transition: all 0.05s; */
+      /* transition-timing-function: ease-in-out; */
     }
-
   </style>
 
   <script>
 
 
+    const setDate = () => {
+      const currentTime = new Date();
+
+      const secondHand = document.querySelector('.second-hand');
+      const minHand = document.querySelector('.min-hand');
+      const hourHand = document.querySelector('.hour-hand');
+
+      const seconds = currentTime.getSeconds();
+      const minutes = currentTime.getMinutes();
+      const hours = currentTime.getHours();
+
+      secondHand.style.transform = `rotate(${6 * seconds + 90}deg)`;
+      minHand.style.transform = `rotate(${6 * minutes + 90}deg)`;
+      hourHand.style.transform = `rotate(${(360 / 12) * hours + 90}deg)`;
+    }
+
+    setInterval(setDate, 1000);
+// This works more or less but jumps on the minute so it doesn't look very nice.
+// This is not handled in the code along so good to know I didn't necessarily miss anything.
+
   </script>
+
 </body>
+
 </html>
