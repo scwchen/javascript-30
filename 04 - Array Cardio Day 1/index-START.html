@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Array Cardio 💪</title>
 </head>
+
 <body>
   <p><em>Psst: have a look at the JavaScript Console</em> 💁</p>
   <script>
@@ -34,32 +36,111 @@
       'Berne, Eric', 'Berra, Yogi', 'Berry, Wendell', 'Bevan, Aneurin', 'Ben-Gurion, David', 'Bevel, Ken', 'Biden, Joseph', 'Bennington, Chester', 'Bierce, Ambrose',
       'Billings, Josh', 'Birrell, Augustine', 'Blair, Tony', 'Beecher, Henry', 'Biondo, Frank'
     ];
-    
+
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+
+    console.table(
+      inventors.filter(inventor => (inventor.year >= 1500 && inventor.year < 1600))
+    );
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
 
+    console.log(
+      inventors.map(inventor => `${inventor.first} ${inventor.last}`)
+    );
+
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+
+    console.table(
+      // Array.sort((a,b) => return (a-b)) 
+      // This is the general sorting ascending method
+      inventors.sort((prevInventor, inventor) => prevInventor.year - inventor.year)
+    );
+
+    // Wes uses specifically -1 and 1 but according to MDN docs you only need > 0 or < 0 (or === 0) so no need for the ternary here
+    // since we are using numbers
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
 
+    // I read this question as how long did all the inventors overlap in lifespan, which is obviously 0 since they were of different eras but a fun little exercise to think about comparing just two inventors at a time. Something like which two inventors lived at the same time together, the longest. If that wording makes sense.
+
+    console.log(
+      inventors.reduce((total, inventor) => total + (inventor.passed - inventor.year), 0)
+    );
+
     // 5. Sort the inventors by years lived
+
+    console.table(
+      inventors.sort((prevInventor, inventor) => (prevInventor.passed - prevInventor.year) - (inventor.passed - inventor.year))
+    );
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
 
+    // // This does not work on this page, rather it has to be on the wiki page unless you do some API or scraping trickery
+
+    // const category = document.querySelector('.mw-category');
+    // const links = category.querySelectorAll('a');
+
+    // // NodeLists don't have map so we can just spread the nodelist into an array
+
+    // // Could also use Array.from () around the nodelist to do the same thing as the ES6 spread
+    // const boulevards = [...links].map(link => link.innerText);
+    // console.log(
+    //   boulevards.filter(boulevard => boulevard.includes('de'))
+    // );
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
 
+    // This is where a ternary comes in handy
+    // Spliting the string where the lastname comes first, before the comma
+    console.log(
+      people.sort((prevPerson, nextPerson) => prevPerson.split(', ')[0] > nextPerson.split(', ')[0] ? 1 : -1)
+    );
+
     // 8. Reduce Exercise
     // Sum up the instances of each of these
-    const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+    const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck'];
 
+    // const dataSet = new Set();
+
+    // data.forEach(word => dataSet.add(word));
+
+    // const wordInstances = [...dataSet].map(word => {
+    //   return {
+    //     word: word,
+    //     instances: data.reduce((number, element) => number + (element === word), 0)
+    //   }
+    // });
+
+    // console.log(wordInstances);
+
+    // // I made this much more complicated than it needed to be but it works
+
+    // Attempt #2 - After peaking at the start of Wes' solution
+
+    console.log(
+      data.reduce((object, word) => {
+        object[word] = object[word] + 1 || 1;
+        // To catch if the object property that matches the word, doesn't exist yet. 
+        
+        // Could also use an if/else or ternary
+        // if (!object[word]) {
+        //   object[word] = 0;
+        // }
+        // object[word]++;
+
+        return object;
+      }, {})
+    );
+
+    // This is far cleaner
   </script>
 </body>
+
 </html>
