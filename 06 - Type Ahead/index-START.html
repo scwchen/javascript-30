@@ -63,7 +63,6 @@
 
       const html =
         matches.map(place => {
-
           const cityName = place.city.replace(regex, `<span class="hl">${searchTerm}</span>`);
           const stateName = place.state.replace(regex, `<span class="hl">${searchTerm}</span>`);
           const population = parseInt(place.population).toLocaleString('en-US');
@@ -74,15 +73,11 @@
             <span class="population">${population}</span>
           </li>`;
         }).join('');
-
       suggestions.innerHTML = html;
-
-      highlightSearch(searchTerm);
-
     };
 
     search.addEventListener('keyup', displayMatches);
-    // search.addEventListener('change', displayMatches);
+    search.addEventListener('change', displayMatches);
 
 
   </script>
