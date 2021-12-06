@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Console Tricks!</title>
 </head>
+
 <body>
 
   <p onClick="makeGreen()">×BREAK×DOWN×</p>
@@ -18,29 +20,85 @@
     }
 
     // Regular
+    console.log("Hello");
 
     // Interpolated
+    // -- Using the '%s', you can grab the value of the following strings
+    console.log("Hello I am a %s %s string!", "😎", "😖");
+
+    // -- You could also do it using regular concatenation which requires you to really look out for your // -- spaces and breaks or template literals (which I am a fan of)
+    // console.log("Hello I am a " + "😎" + " 😖 string!");
+    // let [a, b] = ["😎", "😖"];
+    // console.log(`Hello I am a ${a} ${b} string!`);
 
     // Styled
+    // console.log('%c I am some great text', 'font-size: 50px; background: red; text-shadow: 3px 3px 2px #00CE03;');
 
     // warning!
+    console.warn("Danger Will Robinson!");
 
     // Error :|
+    console.error('Stuff Broken!');
 
     // Info
+    // The info icon has been removed from Chrome but still appears in a browser like Firefox.
+    console.info('Each cashew nut grows on a special kind of apple. Think of how many apples that are grown for that express purpose');
 
     // Testing
+    const p = document.querySelector('p');
+    console.assert(p.classList.contains('test'), "There is no 'test' class");
 
     // clearing
+    // console.clear();
 
     // Viewing DOM Elements
+    // -- Nice for seeing what methods and attributes live on the element
+    console.dir(p);
 
     // Grouping together
+    dogs.forEach(dog => {
+      // console.group(`${dog.name}`);
+      console.groupCollapsed(`${dog.name}`);
+      console.log(`This is ${dog.name}`);
+      console.log(`${dog.name} is ${dog.age} years old.`);
+      console.log(`Which is ${dog.age * 7} in dog years.`);
+      console.groupEnd(`${dog.name}`);
+    });
 
     // counting
+    // You can do the grouping as per above as well
+    console.groupCollapsed('Count');
+    console.count('Test');
+    console.count('Test');
+    console.count('Test');
+    console.count('Hello');
+    console.count('Hello');
+    console.count('Test');
+    console.count('Hello');
+    console.count('Test');
+    console.count('Hello');
+    console.count('Hello');
+    console.count('Hello');
+    console.count('Test');
+    console.groupEnd('Count');
 
     // timing
+    console.time('fetching data');
+    // const start = performance.now();
+    fetch('https://api.github.com/users/wesbos')
+    .then(res => res.json())
+    .then(data => {
+      console.timeEnd('fetching data');
+      // const end = performance.now();
+        console.log(data);
+        // console.log(`${end - start}ms`);
+      });
+      // Also mentioned performance.now();
+      // https://developer.mozilla.org/en-US/docs/Web/API/Performance/now
 
+      // Table
+      console.table(dogs);
   </script>
 </body>
+
 </html>
