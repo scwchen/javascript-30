@@ -10,8 +10,11 @@
 <body>
   <script>
 
-    const konamiCode = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
+    // I've modified the Konami code to end with 'A, B' instead of 'B, A' because the Cornify JS that is included doesn't work properly. As soon as the code is successfully captured the first time, each subsequent keypress adds another success which makes no sense in the context of what we're looking for.
+
+    const konamiCode = [38, 38, 40, 40, 37, 39, 37, 39, 65, 66];
     // I decided against using a regular string and just set up the Konami code array in keyCode format
+
     const pressed = [];
     window.addEventListener('keyup', (e) => {
       pressed.push(e.keyCode);
@@ -24,8 +27,10 @@
       // Wes uses:
       // if (pressed.join('').includes(secretCode))
       // Providing secret code is a string, since I'm using a Konami code with is a series of keypresses, I just used a .every();
-      konamiCode.every((code, index) => konamiCode[index] === pressed[index]);
 
+      konamiCode.every((code, index) => konamiCode[index] === pressed[index]) ? cornify_add() : null;
+
+      // Adding the cornify_add() manually because we really cannot trust the linked JS file.
     });
 
   </script>
