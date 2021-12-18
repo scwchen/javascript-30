@@ -52,9 +52,8 @@
     const articles = new RegExp(/the |a |an /, 'gi');
     // Making a new regex that grabs any of the articles and replace them
     // Replace only grabs the first instance of the article in this case so it shouldn't affect any of the articles in the middle
-    const sortedBands = bands.sort((a, b) => {
-      return (a.replace(articles, '') > b.replace(articles, '') ? 1 : -1);
-    });
+
+    const sortedBands = bands.sort((a, b) => a.replace(articles, '') > b.replace(articles, '') ? 1 : -1);
 
     const bandList = document.querySelector('#bands');
 

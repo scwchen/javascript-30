@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Videos</title>
 </head>
+
 <body>
   <ul class="videos">
     <li data-time="5:43">
@@ -181,7 +183,28 @@
       Video 58
     </li>
   </ul>
-<script>
-</script>
+  <script>
+    const videos = [...document.querySelectorAll('[data-time]')];
+
+    const toSeconds = (time) => {
+      const [mins, secs] = time.split(':').map(parseFloat);
+      // This is only for videos under an hour in length. Could add in some extra logic to handle hours as well but in this case not needed.
+      return ((mins * 60) + secs);
+    }
+
+    const parseTime = (seconds) => {
+      const time = new Date(seconds * 1000);
+      console.log(time.getUTCHours(), time.getMinutes(), time.getSeconds());
+      // const hours = Math.floor(seconds / 3600);
+      // seconds = seconds % 3600;
+      // const minutes = Math.floor(seconds / 60);
+      // seconds = seconds % 60;
+      // console.log(hours, minutes, seconds);
+    }
+
+    parseTime(videos.reduce((totalLength, video) => totalLength += toSeconds(video.dataset.time), 0));
+
+  </script>
 </body>
+
 </html>
