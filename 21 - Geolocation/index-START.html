@@ -58,7 +58,23 @@
     }
     /*Compass: https://thenounproject.com/search/?q=compass&i=592352*/
   </style>
+
   <script>
+    const arrow = document.querySelector('.arrow');
+    const speed = document.querySelector('.speed-value');
+
+    navigator.geolocation.watchPosition((data)=>{
+      console.log(data.coords.speed);
+      console.log(data.coords);
+      speed.textContent = Math.round((data.coords.speed*100)/100);
+      arrow.style.transform = `rotate(${data.coords.heading}deg)`;
+    }, (err) => {
+      console.log(err)
+      alert('You need to allow location to use this app.');
+    });
+
+    // Wes used xCode on a Mac and Safari for DevTools.
+    // I was able to use an Android Emulator (I used Android Studio because I had it installed already). You might be able to use another Android Emulator like BlueStacks but not sure if you can simulate driving with it.
   </script>
 </body>
 </html>
